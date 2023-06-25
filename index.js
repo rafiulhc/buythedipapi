@@ -29,6 +29,28 @@ app.post('/orders', async (req, res) => {
     }
   });
 
+
+app.get('/orders', async (req, res) => {
+
+    try {
+        const client = await MongoClient.connect(
+            `mongodb+srv://${process.env.MONGODB_ORDERS_USER}:${process.env.MONGODB_ORDERS_PASSWORD}@bedrock.ydco1gh.mongodb.net/`
+          );
+
+          const db = client.db("bedrock");
+          const collection = db.collection(process.env.MONGODB_COLLECTION_ORDERS);
+
+
+          const orders = await collection
+                .find({}).toArray()
+
+            return res.status(200).json({ message: 'Retrieved orders data', orders })
+            } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'An error occurred' });
+            }
+  });
+
   // Start the server
   const port = 3001;
   app.listen(port, () => {
