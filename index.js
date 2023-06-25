@@ -5,8 +5,8 @@ require('dotenv').config()
 app.use(express.json());
 
 app.post('/orders', async (req, res) => {
-    let { orderData } = req.body;
-    const newOrder = { orderData };
+    let { time, amount, buyPrice, targetPrice1, targetPrice2 } = req.body;
+    const newOrder = { time, amount, buyPrice, targetPrice1, targetPrice2 };
     try {
         const client = await MongoClient.connect(
             `mongodb+srv://${process.env.MONGODB_ORDERS_USER}:${process.env.MONGODB_ORDERS_PASSWORD}@bedrock.ydco1gh.mongodb.net/`
@@ -16,7 +16,7 @@ app.post('/orders', async (req, res) => {
           const collection = db.collection(process.env.MONGODB_COLLECTION_ORDERS);
 
 
-          await collection.insertOne(newOrder, (err, result) => {
+          await collection.insertOne( newOrder, (err, result) => {
             client.close();
             if (err) {
               return res.status(500).json({ message: "Orders Error from API", err });
