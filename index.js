@@ -58,10 +58,17 @@ app.get('/orders', async (req, res) => {
     const orderId = req.params.orderId;
 
     try {
+      const client = await MongoClient.connect(
+        `mongodb+srv://${process.env.MONGODB_ORDERS_USER}:${process.env.MONGODB_ORDERS_PASSWORD}@bedrock.ydco1gh.mongodb.net/`
+      );
+
+      const db = client.db("bedrock");
+      const collection = db.collection(process.env.MONGODB_COLLECTION_ORDERS);
       await collection.findOneAndUpdate(
         { _id: new ObjectId(orderId) },
         { $set: { sold: true } },
       );
+      console.log("orderiddddddddddd", orderId)
       res.status(200).json({ message: 'Order updated successfully' });
     } catch (error) {
       console.error(error);
