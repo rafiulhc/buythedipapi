@@ -8,9 +8,12 @@ app.post('/orders', async (req, res) => {
     let { time, busdAmount, bnbAmount, buyPrice, targetPrice, sold } = req.body;
     const newOrder = { time, busdAmount, bnbAmount, buyPrice, targetPrice, sold };
     try {
-        const client = await MongoClient.connect(
-            `mongodb+srv://${process.env.MONGODB_ORDERS_USER}:${process.env.MONGODB_ORDERS_PASSWORD}@bedrock.ydco1gh.mongodb.net/`
-          );
+        const uri = `mongodb+srv://${process.env.MONGODB_ORDERS_USER}:${process.env.MONGODB_ORDERS_PASSWORD}@bedrock.ydco1gh.mongodb.net/bedrock?retryWrites=true&w=majority`
+
+          const client = new MongoClient(uri, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+          });
 
           const db = client.db("bedrock");
           const collection = db.collection(process.env.MONGODB_COLLECTION_ORDERS);
