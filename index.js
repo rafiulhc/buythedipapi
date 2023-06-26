@@ -5,8 +5,8 @@ require('dotenv').config()
 app.use(express.json());
 
 app.post('/orders', async (req, res) => {
-    let { time, amount, buyPrice, targetPrice } = req.body;
-    const newOrder = { time, amount, buyPrice, targetPrice };
+    let { time, busdAmount, bnbAmount, buyPrice, targetPrice, sold } = req.body;
+    const newOrder = { time, busdAmount, bnbAmount, buyPrice, targetPrice, sold };
     try {
         const client = await MongoClient.connect(
             `mongodb+srv://${process.env.MONGODB_ORDERS_USER}:${process.env.MONGODB_ORDERS_PASSWORD}@bedrock.ydco1gh.mongodb.net/`
