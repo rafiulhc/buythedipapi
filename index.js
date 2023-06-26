@@ -58,7 +58,7 @@ app.get('/orders', async (req, res) => {
     const orderId = req.params.orderId;
 
     try {
-      await collection.updateOne(
+      await collection.findOneAndUpdate(
         { _id: ObjectId(orderId) },
         { $set: { sold: true } }
       );
