@@ -48,7 +48,27 @@ app.get('/orders', async (req, res) => {
             } catch (error) {
             console.error(error);
             res.status(500).json({ error: 'An error occurred' });
-            }
+        }
+  });
+
+  app.put('/orders/:orderId', async (req, res) => {
+    const orderId = req.params.orderId;
+
+    try {
+      const result = await collection.updateOne(
+        { _id: ObjectId(orderId) },
+        { $set: { sold: true } }
+      );
+
+      if (result.modifiedCount === 1) {
+        res.status(200).json({ message: 'Order updated successfully' });
+      } else {
+        res.status(404).json({ message: 'Order not found' });
+      }
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
   });
 
   // Start the server
