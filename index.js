@@ -55,12 +55,12 @@ app.get('/orders', async (req, res) => {
   });
 
   app.put('/orders/:orderId', async (req, res) => {
-    const orderId = req.params.orderId;
+    const orderId = req.body.orderId;
 
     try {
       await collection.findOneAndUpdate(
         { _id: ObjectId(orderId) },
-        { $set: { sold: true } }
+        { $set: { sold: true } },
       );
       res.status(200).json({ message: 'Order updated successfully' });
     } catch (error) {
