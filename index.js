@@ -68,7 +68,6 @@ app.get('/orders', async (req, res) => {
         { _id: new ObjectId(orderId) },
         { $set: { sold: true } },
       );
-      console.log("orderiddddddddddd", orderId)
       res.status(200).json({ message: 'Order updated successfully' });
     } catch (error) {
       console.error(error);
