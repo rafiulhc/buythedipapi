@@ -59,7 +59,7 @@ app.get('/orders', async (req, res) => {
 
     try {
       await collection.findOneAndUpdate(
-        { _id: ObjectId(orderId) },
+        { _id: new ObjectId(orderId) },
         { $set: { sold: true } },
       );
       res.status(200).json({ message: 'Order updated successfully' });
