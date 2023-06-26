@@ -55,7 +55,7 @@ app.get('/orders', async (req, res) => {
   });
 
   app.put('/orders/:orderId', async (req, res) => {
-    const orderId = req.body.orderId;
+    const orderId = req.params.orderId;
 
     try {
       await collection.findOneAndUpdate(
